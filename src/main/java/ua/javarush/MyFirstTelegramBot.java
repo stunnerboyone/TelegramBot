@@ -27,8 +27,21 @@ public class MyFirstTelegramBot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         Long chatId = getChatId(update);
-        SendMessage message = createMessage(chatId, "Hi Developer!");
-        sendApiMethodAsync(message);
+
+        if(update.hasMessage() && update.getMessage().getText().equals("/start")) {
+            SendMessage message = createMessage(chatId, "Hi Developer!");
+            sendApiMethodAsync(message);
+        }
+
+        if(update.hasMessage() && update.getMessage().getText().contains("привіт")) {
+            SendMessage message = createMessage(chatId, "Привіт, як тебе звуть?");
+            sendApiMethodAsync(message);
+        }
+
+        if(update.hasMessage() && update.getMessage().getText().contains("мене звуть")) {
+            SendMessage message = createMessage(chatId, "Радий знайомству, я — *Кіт*");
+            sendApiMethodAsync(message);
+        }
     }
 
     public static void main(String[] args) throws TelegramApiException {
